@@ -10,12 +10,15 @@ import (
 	"github.com/lileio/lile"
 )
 
-var s = GoGrpcFlutterServer{}
-var cli go_grpc_flutter.GoGrpcFlutterClient
+var authServer = AuthServer{}
+var tasksServer = TasksServer{}
+var authCli go_grpc_flutter.AuthClient
+var tasksCli go_grpc_flutter.TasksClient
 
 func TestMain(m *testing.M) {
 	impl := func(g *grpc.Server) {
-		go_grpc_flutter.RegisterGoGrpcFlutterServer(g, s)
+		go_grpc_flutter.RegisterAuthServer(g, authServer)
+		go_grpc_flutter.RegisterTasksServer(g, tasksServer)
 	}
 
 	gs := grpc.NewServer()
@@ -24,7 +27,8 @@ func TestMain(m *testing.M) {
 	addr, serve := lile.NewTestServer(gs)
 	go serve()
 
-	cli = go_grpc_flutter.NewGoGrpcFlutterClient(lile.TestConn(addr))
+	authCli = go_grpc_flutter.NewAuthClient(lile.TestConn(addr))
+	tasksCli = go_grpc_flutter.NewTasksClient(lile.TestConn(addr))
 
 	os.Exit(m.Run())
 }

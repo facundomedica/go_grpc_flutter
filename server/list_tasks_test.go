@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"context"
+
 	"github.com/facundomedica/go_grpc_flutter"
 	"github.com/stretchr/testify/assert"
 )
@@ -13,7 +14,7 @@ func TestListTasks(t *testing.T) {
 	ctx := context.Background()
 	req := &go_grpc_flutter.Empty{}
 
-	stream, err := cli.ListTasks(ctx, req)
+	stream, err := tasksCli.ListTasks(ctx, req)
 	assert.Nil(t, err)
 
 	for {

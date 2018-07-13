@@ -16,11 +16,13 @@ import (
 
 func main() {
 	logr.SetLevelFromEnv()
-	s := &server.GoGrpcFlutterServer{}
+	as := &server.AuthServer{}
+	ts := &server.TasksServer{}
 
 	lile.Name("go_grpc_flutter")
 	lile.Server(func(g *grpc.Server) {
-		go_grpc_flutter.RegisterGoGrpcFlutterServer(g, s)
+		go_grpc_flutter.RegisterAuthServer(g, as)
+		go_grpc_flutter.RegisterTasksServer(g, ts)
 	})
 
 	pubsub.SetClient(&pubsub.Client{
