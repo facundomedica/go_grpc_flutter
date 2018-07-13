@@ -25,6 +25,7 @@ message Task {
   int64 timestamp = 2;
   string title = 3;
   bool completed = 4;
+  string owner = 5;
 }
 
 // Auth explains it self. You see! No docs needed!
