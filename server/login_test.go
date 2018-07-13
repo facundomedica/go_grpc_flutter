@@ -7,6 +7,7 @@ import (
 	"context"
 
 	"github.com/facundomedica/go_grpc_flutter"
+	"github.com/facundomedica/go_grpc_flutter/utils"
 )
 
 func TestLogin(t *testing.T) {
@@ -22,7 +23,7 @@ func TestLogin(t *testing.T) {
 			nil,
 		}, // a username that already exists (you have to run the test twice the first time)
 		{&go_grpc_flutter.AuthRequest{
-			Username: "notexists" + randSeq(6),
+			Username: "notexists" + utils.RandSeq(6),
 			Password: "passwordpassword"},
 			errors.New("rpc error: code = NotFound desc = This user does not exists"),
 		}, // a username that does not exist

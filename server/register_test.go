@@ -2,12 +2,12 @@ package server
 
 import (
 	"errors"
-	"math/rand"
 	"testing"
 
 	"context"
 
 	"github.com/facundomedica/go_grpc_flutter"
+	"github.com/facundomedica/go_grpc_flutter/utils"
 )
 
 func TestRegister(t *testing.T) {
@@ -23,7 +23,7 @@ func TestRegister(t *testing.T) {
 			errors.New("rpc error: code = InvalidArgument desc = This user already exists"),
 		}, // a username that already exists (you have to run the test twice the first time)
 		{&go_grpc_flutter.AuthRequest{
-			Username: "notexists" + randSeq(6),
+			Username: "notexists" + utils.RandSeq(6),
 			Password: "passwordpassword"},
 			nil}, // a username that does not exist
 	}
@@ -43,14 +43,4 @@ func TestRegister(t *testing.T) {
 			t.Errorf("Register with username %s was expected to succeed and it did not", tt.request.Username)
 		}
 	}
-}
-
-var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-func randSeq(n int) string {
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = letters[rand.Intn(len(letters))]
-	}
-	return string(b)
 }
