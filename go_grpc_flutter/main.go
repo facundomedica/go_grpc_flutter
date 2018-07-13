@@ -4,6 +4,7 @@ import (
 	_ "net/http/pprof"
 
 	"github.com/facundomedica/go_grpc_flutter"
+	"github.com/facundomedica/go_grpc_flutter/database"
 	"github.com/facundomedica/go_grpc_flutter/go_grpc_flutter/cmd"
 	"github.com/facundomedica/go_grpc_flutter/server"
 	"github.com/lileio/fromenv"
@@ -18,6 +19,8 @@ func main() {
 	logr.SetLevelFromEnv()
 	as := &server.AuthServer{}
 	ts := &server.TasksServer{}
+
+	database.InitDB()
 
 	lile.Name("go_grpc_flutter")
 	lile.Server(func(g *grpc.Server) {
