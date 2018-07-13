@@ -12,7 +12,6 @@ import (
 
 func TestRegister(t *testing.T) {
 	ctx := context.Background()
-	// req := &go_grpc_flutter.AuthRequest{}
 
 	var reqTests = []struct {
 		request *go_grpc_flutter.AuthRequest // input
