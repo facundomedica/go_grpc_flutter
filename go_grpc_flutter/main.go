@@ -1,7 +1,9 @@
 package main
 
 import (
+	"math/rand"
 	_ "net/http/pprof"
+	"time"
 
 	"github.com/facundomedica/go_grpc_flutter"
 	"github.com/facundomedica/go_grpc_flutter/database"
@@ -13,9 +15,12 @@ import (
 	"github.com/lileio/pubsub"
 	"github.com/lileio/pubsub/middleware/defaults"
 	"google.golang.org/grpc"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
 	logr.SetLevelFromEnv()
 	as := &server.AuthServer{}
 	ts := &server.TasksServer{}
