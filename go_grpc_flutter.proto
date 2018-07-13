@@ -2,14 +2,41 @@ syntax = "proto3";
 option go_package = "github.com/facundomedica/go_grpc_flutter";
 package go_grpc_flutter;
 
-message GetRequest {
-  string id = 1;
+// AuthRequest is used both in Login and Register.
+// You usually want this to be different at Register,
+// because you want more data than user and password
+message AuthRequest {
+  string username = 1;
+  string password = 2;
 }
 
-message GetResponse {
-  string id = 1;
+// AuthResponse contains the token that the client will use
+// to "let the server know who it is talking with"
+message AuthResponse {
+  string token = 1;
 }
 
-service GoGrpcFlutter {
-  rpc Get(GetRequest) returns (GetResponse) {}
+// Empty exists because we don't always need to send/receive data
+message Empty {}
+
+// Task is our simple task
+message Task {
+  string id = 1;
+  int64 timestamp = 2;
+  string title = 3;
+  bool completed = 4;
+}
+
+// Auth explains it self. You see! No docs needed!
+service Auth {
+  rpc Login(AuthRequest) returns (AuthResponse) {}
+  rpc Register(AuthRequest) returns (AuthResponse) {}
+}
+
+// Tasks is self explanatory too. We are streaming tasks!!!
+service Tasks {
+  rpc ListTasks(Empty) returns (stream Task) {}
+  rpc CreateTask(Task) returns (Task) {}
+  rpc UpdateTask(Task) returns (Task) {}
+  rpc DeleteTask(Task) returns (Empty) {}
 }
