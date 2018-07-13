@@ -22,7 +22,7 @@ func InitDB() {
 
 	sqlStmt := `
 	create table users (username text not null primary key, password text);
-	create table tasks (id text not null primary key, title text, timestamp integer, completed integer);
+	create table tasks (id text not null primary key, title text, timestamp integer, completed integer, owner string);
 	` // completed is an integer because we don't have booleans in SQLite. No problem!
 
 	// execute our query
