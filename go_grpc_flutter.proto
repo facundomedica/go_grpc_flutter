@@ -1,0 +1,15 @@
+syntax = "proto3";
+option go_package = "github.com/facundomedica/go_grpc_flutter";
+package go_grpc_flutter;
+
+message GetRequest {
+  string id = 1;
+}
+
+message GetResponse {
+  string id = 1;
+}
+
+service GoGrpcFlutter {
+  rpc Get(GetRequest) returns (GetResponse) {}
+}
