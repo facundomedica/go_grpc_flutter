@@ -1,7 +1,6 @@
 package server
 
 import (
-	"log"
 	"time"
 
 	"context"
@@ -27,7 +26,6 @@ func (s TasksServer) CreateTask(ctx context.Context, r *go_grpc_flutter.Task) (*
 
 	timestamp := time.Now().Unix()
 	id := utils.RandSeq(12) // Our homemade "UUID" (Don't use this!!!)
-	log.Println(ctx)
 	username, ok := ctx.Value("username").(string)
 
 	if !ok {
