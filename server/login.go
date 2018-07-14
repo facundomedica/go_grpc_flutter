@@ -3,11 +3,10 @@ package server
 import (
 	"context"
 	"database/sql"
-	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/facundomedica/go_grpc_flutter"
 	"github.com/facundomedica/go_grpc_flutter/database"
+	"github.com/facundomedica/go_grpc_flutter/utils"
 	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -32,16 +31,7 @@ func (s AuthServer) Login(ctx context.Context, r *go_grpc_flutter.AuthRequest) (
 		return nil, status.Error(codes.Unauthenticated, "Wrong password!")
 	}
 
-	// Create a new token object, specifying signing method and the claims
-	// you would like it to contain. In this case we are storing the username
-	// and the expiration date.
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"username": username,
-		"expires":  time.Now().Add(72 * time.Hour),
-	})
-
-	// Sign and get the complete encoded token as a string using the secret
-	tokenString, err := token.SignedString([]byte("thisismyveysecretkey!!@@33$$5asqweasdqwe"))
+	tokenString, err := utils.MakeToken(username)
 
 	if err != nil {
 		return nil, status.Error(codes.Internal, "There was an error making the token")

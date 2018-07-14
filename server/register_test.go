@@ -18,7 +18,7 @@ func TestRegister(t *testing.T) {
 		err     error                        // expected result
 	}{
 		{&go_grpc_flutter.AuthRequest{
-			Username: "already_exists",
+			Username: "user_that_exists",
 			Password: "passwordpassword"},
 			errors.New("rpc error: code = InvalidArgument desc = This user already exists"),
 		}, // a username that already exists (you have to run the test twice the first time)
