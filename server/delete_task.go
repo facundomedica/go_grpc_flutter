@@ -29,7 +29,7 @@ func (s TasksServer) DeleteTask(ctx context.Context, r *go_grpc_flutter.Task) (*
 
 	rowsAffected, _ := res.RowsAffected()
 
-	if rowsAffected != 0 {
+	if rowsAffected != 1 {
 		return nil, status.Error(codes.Internal, "Couldn't delete the task!")
 	}
 

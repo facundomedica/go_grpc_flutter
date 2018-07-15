@@ -6,12 +6,12 @@ import (
 	"testing"
 	"time"
 
-	"google.golang.org/grpc"
-
 	"github.com/facundomedica/go_grpc_flutter"
 	"github.com/facundomedica/go_grpc_flutter/database"
+	"github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	"github.com/lileio/lile"
 	_ "github.com/mattn/go-sqlite3"
+	"google.golang.org/grpc"
 )
 
 var authServer = AuthServer{}
@@ -26,12 +26,17 @@ func TestMain(m *testing.M) {
 	impl := func(g *grpc.Server) {
 		go_grpc_flutter.RegisterAuthServer(g, authServer)
 		go_grpc_flutter.RegisterTasksServer(g, tasksServer)
+
 	}
 
-	gs := grpc.NewServer()
+	gs := grpc.NewServer(
+		grpc.UnaryInterceptor(grpc_auth.UnaryServerInterceptor(AuthFunc)),
+		grpc.StreamInterceptor(grpc_auth.StreamServerInterceptor(AuthFunc)),
+	)
 	impl(gs)
 
 	addr, serve := lile.NewTestServer(gs)
+
 	go serve()
 
 	authCli = go_grpc_flutter.NewAuthClient(lile.TestConn(addr))

@@ -9,6 +9,7 @@ import (
 	"github.com/facundomedica/go_grpc_flutter/database"
 	"github.com/facundomedica/go_grpc_flutter/go_grpc_flutter/cmd"
 	"github.com/facundomedica/go_grpc_flutter/server"
+	"github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	"github.com/lileio/fromenv"
 	"github.com/lileio/lile"
 	"github.com/lileio/logr"
@@ -32,6 +33,9 @@ func main() {
 		go_grpc_flutter.RegisterAuthServer(g, as)
 		go_grpc_flutter.RegisterTasksServer(g, ts)
 	})
+
+	lile.AddUnaryInterceptor(grpc_auth.UnaryServerInterceptor(server.AuthFunc))
+	lile.AddStreamInterceptor(grpc_auth.StreamServerInterceptor(server.AuthFunc))
 
 	pubsub.SetClient(&pubsub.Client{
 		ServiceName: lile.GlobalService().Name,
