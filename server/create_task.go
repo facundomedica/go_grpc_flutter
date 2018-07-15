@@ -29,7 +29,7 @@ func (s TasksServer) CreateTask(ctx context.Context, r *go_grpc_flutter.Task) (*
 	username, ok := ctx.Value("username").(string)
 
 	if !ok {
-		return nil, status.Error(codes.Unauthenticated, "Wow, you reached this with out loggin in? Impressive.")
+		return nil, status.Error(codes.Unauthenticated, "Wow, you reached this without logging in? Impressive.")
 	}
 
 	_, err = stmt.Exec(id, timestamp, r.Title, 0, username)

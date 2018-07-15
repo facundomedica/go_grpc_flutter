@@ -19,7 +19,7 @@ func (s AuthServer) Register(ctx context.Context, r *go_grpc_flutter.AuthRequest
 		return nil, status.Error(codes.Internal, "Something is very wrong!")
 	}
 
-	passwordHashBytes, err := bcrypt.GenerateFromPassword([]byte(r.Password), 14)
+	passwordHashBytes, err := bcrypt.GenerateFromPassword([]byte(r.Password), 10)
 
 	if err != nil {
 		return nil, status.Error(codes.Internal, "Failed to hash the password.")
