@@ -24,7 +24,7 @@ func (s TasksServer) DeleteTask(ctx context.Context, r *go_grpc_flutter.Task) (*
 	res, err := stmt.Exec(r.Id, username)
 
 	if err != nil {
-		return nil, status.Error(codes.Internal, "Some error occurred while trying to insert the task! "+err.Error())
+		return nil, status.Error(codes.Internal, "Some error occurred while trying to delete the task! "+err.Error())
 	}
 
 	rowsAffected, _ := res.RowsAffected()
